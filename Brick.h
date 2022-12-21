@@ -5,8 +5,8 @@
 #include "Animations.h"
 
 #define ID_ANI_BRICK 10000
-#define BRICK_WIDTH 46
-#define BRICK_BBOX_WIDTH 46
+#define BRICK_WIDTH 47
+#define BRICK_BBOX_WIDTH 47
 #define BRICK_BBOX_HEIGHT 14
 
 class CBrick : public CGameObject {
