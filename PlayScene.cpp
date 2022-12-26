@@ -10,6 +10,7 @@
 #include "Coin.h"
 #include "Platform.h"
 #include "Bush.h"
+#include "Cloud.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -155,6 +156,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float bbox_height = (float)atof(tokens[4].c_str());
 		int sprite_bush = atoi(tokens[5].c_str());
 		obj = new Bush(x, y, bbox_width, bbox_height, sprite_bush);
+		break;
+	}
+
+	case OBJECT_TYPE_CLOUD:
+	{
+		float bbox_width = (float)atof(tokens[3].c_str());
+		float bbox_height = (float)atof(tokens[4].c_str());
+		int sprite_cloud = atoi(tokens[5].c_str());
+		obj = new Cloud(x, y, bbox_width, bbox_height, sprite_cloud);
 		break;
 	}
 
