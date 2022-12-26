@@ -11,7 +11,7 @@ void Bush::Render()
 
 	s->Get(this->spriteIdBush)->Draw(x, y);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void Bush::GetBoundingBox(float& l, float& t, float& r, float& b)
