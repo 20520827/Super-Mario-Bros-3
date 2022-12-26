@@ -11,6 +11,7 @@
 #include "Platform.h"
 #include "Bush.h"
 #include "Cloud.h"
+#include "BonusBlock.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -167,6 +168,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new Cloud(x, y, bbox_width, bbox_height, sprite_cloud);
 		break;
 	}
+
+	case OBJECT_TYPE_BBLOCK: obj = new BonusBlock(x, y); break;
 
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);

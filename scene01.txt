@@ -6,6 +6,7 @@ coin.txt
 goomba.txt
 cloud.txt
 bush.txt
+bonus.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -122,6 +123,18 @@ bush.txt
 1	2957	195
 1	3004	195
 
+#BONUSBLOCK
+8	183	140
+8	198	140
+
+8	228	90
+8	243	90
+
+8	500	105
+
+8	675	166
+
+8	720	140
 
 #COIN
 4	100	120
