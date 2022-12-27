@@ -12,6 +12,7 @@
 #include "Bush.h"
 #include "Cloud.h"
 #include "BonusBlock.h"
+#include "BGTiles.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -170,6 +171,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 
 	case OBJECT_TYPE_BBLOCK: obj = new BonusBlock(x, y); break;
+
+	case OBJECT_TYPE_BGTILES:
+	{
+		float bbox_width = (float)atof(tokens[3].c_str());
+		float bbox_height = (float)atof(tokens[4].c_str());
+		int sprite_tile = atoi(tokens[5].c_str());
+		obj = new BGTiles(x, y, bbox_width, bbox_height, sprite_tile);
+		break;
+	}
 
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
