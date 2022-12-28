@@ -8,7 +8,6 @@
 #include "Coin.h"
 #include "BonusBlock.h"
 #include "Portal.h"
-#include "BGTiles.h"
 
 #include "Collision.h"
 
@@ -58,8 +57,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<BonusBlock*>(e->obj))
 		OnCollisionWithBonusBlock(e);
-	else if (dynamic_cast<BGTiles*>(e->obj))
-		OnCollisionWithTiles(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -115,15 +112,6 @@ void CMario::OnCollisionWithBonusBlock(LPCOLLISIONEVENT e)
 	}
 }
 
-void CMario::OnCollisionWithTiles(LPCOLLISIONEVENT e)
-{
-	BGTiles* tile = dynamic_cast<BGTiles*>(e->obj);
-
-	if (e->ny < 0)
-	{
-		tile->SetState(BGT_STATE_SOLID);
-	}
-}
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {

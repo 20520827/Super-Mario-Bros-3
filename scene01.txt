@@ -7,6 +7,7 @@ goomba.txt
 cloud.txt
 bush.txt
 bonus.txt
+
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -38,6 +39,7 @@ bonus.txt
 6	1200	179	15	15	65000
 6	1215	179	15	15	65000
 6	1230	179	15	15	65000
+
 
 #CLOUD
 7	155	40	48	23	71000
