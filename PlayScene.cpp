@@ -12,6 +12,7 @@
 #include "Bush.h"
 #include "Cloud.h"
 #include "BonusBlock.h"
+#include "InvisPlat.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -171,6 +172,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	case OBJECT_TYPE_BBLOCK: obj = new BonusBlock(x, y); break;
 
+	case OBJECT_TYPE_IPLAT:
+	{
+		float bbox_width = (float)atof(tokens[3].c_str());
+		float bbox_height = (float)atof(tokens[4].c_str());
+		obj = new InvisPlat(x, y, bbox_width, bbox_height);
+		break;
+	}
 
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
