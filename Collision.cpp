@@ -205,9 +205,19 @@ void CCollision::Filter( LPGAMEOBJECT objSrc,
 			min_tx = c->t; min_ix = i;
 		}
 
-		if (c->t < min_ty && c->ny != 0 && filterY == 1) {
-			min_ty = c->t; min_iy = i;
+		if (c->obj->IsOneWayY())
+		{
+			if (c->t < min_ty && c->ny < 0 && filterY == 1) {
+				min_ty = c->t; min_iy = i;
+			}
 		}
+		else
+		{
+			if (c->t < min_ty && c->ny != 0 && filterY == 1) {
+				min_ty = c->t; min_iy = i;
+			}
+		}
+		
 	}
 
 	if (min_ix >= 0) colX = coEvents[min_ix];
@@ -250,6 +260,7 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 		{
 			if (colY->t < colX->t)	// was collision on Y first ?
 			{
+
 				y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
 				objSrc->SetPosition(x, y);
 
@@ -337,18 +348,42 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 
 		objSrc->SetPosition(x, y);
 	}
-
+	
 	//
 	// Scan all non-blocking collisions for further collision logic
 	//
+
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
 		LPCOLLISIONEVENT e = coEvents[i];
 		if (e->isDeleted) continue;
 		if (e->obj->IsBlocking()) continue;  // blocking collisions were handled already, skip them
+		if (!e->obj->IsOneWayY()) continue;
+		if (e->ny < 0)
+		{
+			float x, y, vx, vy, dx, dy;
+			objSrc->GetPosition(x, y);
+			objSrc->GetSpeed(vx, vy);
+			dx = vx * dt;
+			dy = vy * dt;
+			y += e->t * dy + e->ny * BLOCK_PUSH_FACTOR;
+			objSrc->SetPosition(x, y);
 
+			objSrc->OnCollisionWith(e);
+			objSrc->SetPosition(x, y);
+		}
+	}
+
+	for (UINT i = 0; i < coEvents.size(); i++)
+	{
+		LPCOLLISIONEVENT e = coEvents[i];
+		if (e->isDeleted) continue;
+		if (e->obj->IsBlocking()) continue;  // blocking collisions were handled already, skip them
+		if (e->obj->IsOneWayY()) continue;
 		objSrc->OnCollisionWith(e);			
 	}
+	
+	
 
 
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
