@@ -7,6 +7,7 @@ goomba.txt
 cloud.txt
 bush.txt
 bonus.txt
+pipe.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -148,10 +149,10 @@ bonus.txt
 8	183	140
 8	198	140
 
-8	228	90
-8	243	90
+8	228	85
+8	243	85
 
-8	430	105
+8	430	95
 
 8	675	166
 
@@ -170,3 +171,7 @@ bonus.txt
 #CLOUDPLATFORM
 5	1400	-70	16	16	4	75000	75000	75000
 5	1490	-85	16	16	13	75000	75000	75000
+
+#PIPE
+10	360	146	32	15	101000
+10	360	171	32	33	102000

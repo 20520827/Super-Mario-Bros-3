@@ -13,6 +13,7 @@
 #include "Cloud.h"
 #include "BonusBlock.h"
 #include "InvisPlat.h"
+#include "Pipe.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -177,6 +178,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float bbox_width = (float)atof(tokens[3].c_str());
 		float bbox_height = (float)atof(tokens[4].c_str());
 		obj = new InvisPlat(x, y, bbox_width, bbox_height);
+		break;
+	}
+
+	case OBJECT_TYPE_PIPE:
+	{
+		float bbox_width = (float)atof(tokens[3].c_str());
+		float bbox_height = (float)atof(tokens[4].c_str());
+		int sprite_pipe = atoi(tokens[5].c_str());
+		obj = new Pipe(x, y, bbox_width, bbox_height, sprite_pipe);
 		break;
 	}
 
