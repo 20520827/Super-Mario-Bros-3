@@ -8,6 +8,7 @@
 #include "Coin.h"
 #include "BonusBlock.h"
 #include "Portal.h"
+#include "Pipe.h"
 
 #include "Collision.h"
 
