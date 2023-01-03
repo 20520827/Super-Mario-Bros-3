@@ -9,6 +9,7 @@
 #include "BonusBlock.h"
 #include "Portal.h"
 #include "Pipe.h"
+#include "Koopa.h"
 
 #include "Collision.h"
 
@@ -58,6 +59,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<BonusBlock*>(e->obj))
 		OnCollisionWithBonusBlock(e);
+	else if (dynamic_cast<Koopa*>(e->obj))
+		OnCollisionWithKoopa(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -109,6 +112,73 @@ void CMario::OnCollisionWithBonusBlock(LPCOLLISIONEVENT e)
 		if (bblock->GetState() != BBLOCK_STATE_EMPTY)
 		{
 			bblock->SetState(BBLOCK_STATE_EMPTY);
+		}
+	}
+}
+
+void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
+{
+	Koopa* koopa = dynamic_cast<Koopa*>(e->obj);
+	float kx, ky;
+	koopa->GetPosition(kx, ky);
+	if (e->ny < 0)
+	{
+		if (koopa->GetState() != KOOPA_STATE_DIE)
+		{
+			if (koopa->GetState() == KOOPA_STATE_WALKING)
+			{
+				koopa->SetState(KOOPA_STATE_SHELL);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
+			}
+			else if (koopa->GetState() == KOOPA_STATE_SHELL)
+			{
+				koopa->SetState(KOOPA_STATE_SHELL_MOVING);
+				if (this->x <= kx)
+				{
+					koopa->SetSpeed(KOOPA_SHELL_MOVING_SPEED, 0);
+				}
+				else
+				{
+					koopa->SetSpeed(-KOOPA_SHELL_MOVING_SPEED, 0);
+				}
+			}
+		}
+	}
+	else 
+	{
+		if (untouchable == 0)
+		{
+			if (koopa->GetState() != KOOPA_STATE_DIE)
+			{
+				if (koopa->GetState() == KOOPA_STATE_SHELL)
+				{
+					if (e->nx != 0)
+					{
+						koopa->SetState(KOOPA_STATE_SHELL_MOVING);
+						if (e->nx < 0)
+						{
+							koopa->SetSpeed(KOOPA_SHELL_MOVING_SPEED, 0);
+						}
+						else
+						{
+							koopa->SetSpeed(-KOOPA_SHELL_MOVING_SPEED, 0);
+						}
+					}
+				}
+				else
+				{
+					if (level > MARIO_LEVEL_SMALL)
+					{
+						level = MARIO_LEVEL_SMALL;
+						StartUntouchable();
+					}
+					else
+					{
+						DebugOut(L">>> Mario DIE >>> \n");
+						SetState(MARIO_STATE_DIE);
+					}
+				}
+			}
 		}
 	}
 }
