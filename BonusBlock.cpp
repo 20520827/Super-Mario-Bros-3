@@ -50,6 +50,10 @@ void BonusBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if ((state == BBLOCK_STATE_JUMP) && (GetTickCount64() - jump_start > 220))
 	{
 		SetState(BBLOCK_STATE_EMPTY);
+		if (y != oy)
+		{
+			y = oy;
+		}
 		return;
 	}
 
