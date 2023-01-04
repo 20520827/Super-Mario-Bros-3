@@ -96,7 +96,7 @@ void Koopa::Render()
 		aniId = ID_ANI_KOOPA_WALKING_RIGHT;
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void Koopa::SetState(int state)

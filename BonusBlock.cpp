@@ -8,7 +8,7 @@ void BonusBlock::Render()
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void BonusBlock::GetBoundingBox(float& l, float& t, float& r, float& b)
