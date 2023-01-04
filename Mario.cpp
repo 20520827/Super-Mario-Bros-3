@@ -111,7 +111,7 @@ void CMario::OnCollisionWithBonusBlock(LPCOLLISIONEVENT e)
 	{
 		if (bblock->GetState() != BBLOCK_STATE_EMPTY)
 		{
-			bblock->SetState(BBLOCK_STATE_EMPTY);
+			bblock->SetState(BBLOCK_STATE_JUMP);
 		}
 	}
 }

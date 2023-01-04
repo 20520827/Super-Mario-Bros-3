@@ -1,9 +1,13 @@
 #include "BonusBlock.h"
 void BonusBlock::Render()
 {
-	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(this->aniIdBonusBlock)->Render(x, y);
+	int aniId = ANI_ID_SPINNING;
+	if (state == BBLOCK_STATE_EMPTY)
+	{
+		aniId = ANI_ID_EMPTY;
+	}
 
+	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	RenderBoundingBox();
 }
 
@@ -21,10 +25,34 @@ void BonusBlock::SetState(int state)
 	switch (state)
 	{
 	case BBLOCK_STATE_SPINNING:
-		this->aniIdBonusBlock = ANI_ID_SPINNING;
 		break;
 	case BBLOCK_STATE_EMPTY:
-		this->aniIdBonusBlock = ANI_ID_EMPTY;
+		ay = 0;
+		vy = 0;
+		break;
+	case BBLOCK_STATE_JUMP:
+		jump_start = GetTickCount64();
+		vy = -0.25f;
+		ay = 0.002f;
 		break;
 	}
+}
+
+void BonusBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	vy += ay * dt;
+
+	if (abs(y) > oy)
+	{
+		y = oy;
+	}
+
+	if ((state == BBLOCK_STATE_JUMP) && (GetTickCount64() - jump_start > 220))
+	{
+		SetState(BBLOCK_STATE_EMPTY);
+		return;
+	}
+
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
