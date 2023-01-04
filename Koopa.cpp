@@ -1,5 +1,6 @@
 #include "Koopa.h"
 #include "Mario.h"
+#include "InvisFlag.h"
 
 Koopa::Koopa(float x, float y) :CGameObject(x, y)
 {
@@ -36,6 +37,8 @@ void Koopa::OnNoCollision(DWORD dt)
 
 void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<InvisFlag*>(e->obj))
+		OnCollisionWithIFlag(e);
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<Koopa*>(e->obj)) return;
 	if (dynamic_cast<CMario*>(e->obj)) return;
@@ -45,6 +48,14 @@ void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		vy = 0;
 	}
 	else if (e->nx != 0 && e->obj->IsBlocking())
+	{
+		vx = -vx;
+	}
+}
+
+void Koopa::OnCollisionWithIFlag(LPCOLLISIONEVENT e)
+{
+	if (e->nx != 0 && state == KOOPA_STATE_WALKING)
 	{
 		vx = -vx;
 	}
