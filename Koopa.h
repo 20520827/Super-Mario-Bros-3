@@ -21,6 +21,7 @@
 
 #define ID_ANI_KOOPA_WALKING 110001
 #define ID_ANI_KOOPA_DIE 110002
+#define ID_ANI_KOOPA_WALKING_RIGHT 110003
 
 class Koopa:public CGameObject
 {

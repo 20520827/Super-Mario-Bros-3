@@ -64,7 +64,7 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		state = KOOPA_STATE_WALKING;
 		vx = -KOOPA_WALKING_SPEED;
-		vy = -0.20;
+		vy = -0.20;	//prevent koopa from falling out of the level.
 		return;
 	}
 
@@ -79,6 +79,10 @@ void Koopa::Render()
 	if (state == KOOPA_STATE_DIE || state == KOOPA_STATE_SHELL || state == KOOPA_STATE_SHELL_MOVING)
 	{
 		aniId = ID_ANI_KOOPA_DIE;
+	}
+	if (vx > 0 && state == KOOPA_STATE_WALKING)
+	{
+		aniId = ID_ANI_KOOPA_WALKING_RIGHT;
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	RenderBoundingBox();
