@@ -52,7 +52,7 @@ void BonusBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(BBLOCK_STATE_EMPTY);
 		if (y != oy)
 		{
-			y = oy;
+			y = oy; //Adjust the block's y position
 		}
 		return;
 	}
