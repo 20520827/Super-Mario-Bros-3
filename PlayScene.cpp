@@ -16,6 +16,7 @@
 #include "Pipe.h"
 #include "Koopa.h"
 #include "InvisFlag.h"
+#include "BonusCoin.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -128,6 +129,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_KOOPA: obj = new Koopa(x, y); break;
 	case OBJECT_TYPE_IFLAG: obj = new InvisFlag(x, y); break;
+	case OBJECT_TYPE_BCOIN: obj = new BonusCoin(x, y); break;
 
 	case OBJECT_TYPE_PLATFORM:
 	{

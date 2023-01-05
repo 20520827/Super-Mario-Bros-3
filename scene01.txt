@@ -9,6 +9,7 @@ bush.txt
 bonus.txt
 pipe.txt
 koopa.txt
+bonuscoin.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -73,6 +74,15 @@ koopa.txt
 7	786	77	24	23	74000
 
 7	1195	40	32	23	72000
+
+#BONUSCOIN
+13	183	140
+13	198	140
+
+13	228	85
+
+13	430	95
+13	720	140
 
 # MARIO
 0	20	10
