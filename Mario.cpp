@@ -10,6 +10,7 @@
 #include "Portal.h"
 #include "Pipe.h"
 #include "Koopa.h"
+#include "BonusCoin.h"
 
 #include "Collision.h"
 
@@ -61,6 +62,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithBonusBlock(e);
 	else if (dynamic_cast<Koopa*>(e->obj))
 		OnCollisionWithKoopa(e);
+	else if (dynamic_cast<BonusCoin*>(e->obj))
+		OnCollisionWithBonusCoin(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -101,6 +104,16 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
 	coin++;
+}
+
+void CMario::OnCollisionWithBonusCoin(LPCOLLISIONEVENT e)
+{
+	BonusCoin* bcoin = dynamic_cast<BonusCoin*>(e->obj);
+	if (e->ny > 0)
+	{
+		bcoin->SetState(BCOIN_STATE_ACTIVATE);
+		coin++;
+	}
 }
 
 void CMario::OnCollisionWithBonusBlock(LPCOLLISIONEVENT e)
