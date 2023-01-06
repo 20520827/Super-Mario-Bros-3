@@ -25,6 +25,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		SetState(MARIO_STATE_DIE);
 	}
+	if (x <= 5)
+	{
+		x = 5;
+	}
 
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
