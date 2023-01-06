@@ -1,4 +1,5 @@
 #include "Goomba.h"
+#include "InvisFlag.h"
 
 CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 {
@@ -34,14 +35,16 @@ void CGoomba::OnNoCollision(DWORD dt)
 
 void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<InvisFlag*>(e->obj))
+		OnCollisionWithIFlag(e);
 	if (!e->obj->IsBlocking()) return; 
 	if (dynamic_cast<CGoomba*>(e->obj)) return; 
 
-	if (e->ny != 0 )
+	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;
 	}
-	else if (e->nx != 0)
+	else if (e->nx != 0 && e->obj->IsBlocking())
 	{
 		vx = -vx;
 	}
@@ -90,5 +93,13 @@ void CGoomba::SetState(int state)
 		case GOOMBA_STATE_WALKING: 
 			vx = -GOOMBA_WALKING_SPEED;
 			break;
+	}
+}
+
+void CGoomba::OnCollisionWithIFlag(LPCOLLISIONEVENT e)
+{
+	if (e->nx != 0 && state == GOOMBA_STATE_WALKING)
+	{
+		vx = -vx;
 	}
 }
