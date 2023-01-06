@@ -13,7 +13,7 @@ public:
 		this->bbox_width = 1;
 		this->bbox_height = 8;
 	}
-	void Render() { RenderBoundingBox(); }
+	void Render() { /*RenderBoundingBox();*/ }
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int IsBlocking() { return 0; }
