@@ -1,5 +1,7 @@
 #include "Koopa.h"
 #include "Mario.h"
+#include "Goomba.h"
+#include "BonusBlock.h"
 #include "InvisFlag.h"
 
 Koopa::Koopa(float x, float y) :CGameObject(x, y)
@@ -37,11 +39,15 @@ void Koopa::OnNoCollision(DWORD dt)
 
 void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<InvisFlag*>(e->obj))
-		OnCollisionWithIFlag(e);
-	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<Koopa*>(e->obj)) return;
 	if (dynamic_cast<CMario*>(e->obj)) return;
+	if (dynamic_cast<InvisFlag*>(e->obj))
+		OnCollisionWithIFlag(e);
+	if (dynamic_cast<CGoomba*>(e->obj))
+		OnCollisionWithGoomba(e);
+	else if (dynamic_cast<BonusBlock*>(e->obj))
+		OnCollisionWithBonusBlock(e);
+	if (!e->obj->IsBlocking()) return;
 
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
@@ -50,6 +56,24 @@ void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (e->nx != 0 && e->obj->IsBlocking())
 	{
 		vx = -vx;
+	}
+}
+
+void Koopa::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
+{
+	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+	if (state == KOOPA_STATE_SHELL_MOVING)
+	{
+		goomba->SetState(GOOMBA_STATE_DIE);
+	}
+}
+
+void Koopa::OnCollisionWithBonusBlock(LPCOLLISIONEVENT e)
+{
+	BonusBlock* bblock = dynamic_cast<BonusBlock*>(e->obj);
+	if (state == KOOPA_STATE_SHELL_MOVING && e->nx != 0)
+	{
+		bblock->SetState(BBLOCK_STATE_EMPTY);
 	}
 }
 

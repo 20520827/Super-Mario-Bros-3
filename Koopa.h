@@ -42,6 +42,8 @@ protected:
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual void OnCollisionWithIFlag(LPCOLLISIONEVENT e);
+	virtual void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
+	virtual void OnCollisionWithBonusBlock(LPCOLLISIONEVENT e);
 
 public:
 	Koopa(float x, float y);
